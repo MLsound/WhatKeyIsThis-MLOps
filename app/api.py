@@ -11,6 +11,10 @@ sys.path.insert(0, project_root)
 from flask import Blueprint, request, jsonify
 from src.pitch_detector import run as detect_pitch
 
+# For input sanitization
+import tempfile  # Import the tempfile library
+from werkzeug.utils import secure_filename
+
 # Change this line to create a Blueprint
 api = Blueprint('api', __name__)
 
@@ -30,12 +34,27 @@ def detectar_tono():
     if audio_file.mimetype not in ['audio/mpeg', 'audio/wav', 'audio/ogg', 'audio/flac']:
         return jsonify({'error': 'Tipo de archivo no soportado. Por favor suba un archivo de audio válido.'}), 415
 
+    # Use a try-finally block to ensure the temporary file is deleted
     try:
-        #pitch = detect_pitch('audio_recibido.mp3')
-        pitch = detect_pitch(audio_file)
+        # Create a temporary file with a specific extension
+        # 'suffix' is important for libraries that rely on the file type
+        with tempfile.NamedTemporaryFile(suffix=f'.{secure_filename(audio_file.filename).split(".")[-1]}', delete=False) as temp_file:
+            # Write the content of the uploaded file to the temporary file
+            audio_file.save(temp_file)
+            temp_file_path = temp_file.name
+            # print(">>Temp file created:", temp_file_path)
+
+        # Pass the path of the temporary file to your pitch detection function
+        pitch = detect_pitch(temp_file_path)
         return jsonify({'pitch': pitch}), 200
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+    finally:
+        # This block ensures the temporary file is deleted, even if an error occurs
+        if 'temp_file_path' in locals() and os.path.exists(temp_file_path):
+            os.remove(temp_file_path)
+            # print(">>Temp file successfully deleted!")
+
 
 # THIS SECTION WILL BE REPLACED LATER BY A GENERATOR FUNCTION
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
