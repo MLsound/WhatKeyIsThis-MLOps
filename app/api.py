@@ -1,4 +1,4 @@
-# app.py
+# api.py
 import sys
 import os
 
@@ -8,25 +8,31 @@ project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 sys.path.insert(0, project_root)
 
 # Now your import will work correctly
-from flask import Flask, request, jsonify
+from flask import Blueprint, request, jsonify
 from src.pitch_detector import run as detect_pitch
 
-app = Flask(__name__)
+# Change this line to create a Blueprint
+api = Blueprint('api', __name__)
 
-@app.route("/")
+@api.route("/")
 def root():
     return "Wellcome dear human…"
 
-@app.route('/detect', methods=['POST'])
+@api.route('/detect', methods=['POST'])
 def detectar_tono():
     if 'audio' not in request.files:
         return jsonify({'error': 'No se ha enviado ningún archivo de audio'}), 400
 
     audio_file = request.files['audio']
-    #audio_file.save('audio_recibido.mp3') # guarda el archivo
+    # audio_file.save('audio_recibido.mp3') # guarda el archivo
+
+    # Check the file type to ensure it's a supported audio format
+    if audio_file.mimetype not in ['audio/mpeg', 'audio/wav', 'audio/ogg', 'audio/flac']:
+        return jsonify({'error': 'Tipo de archivo no soportado. Por favor suba un archivo de audio válido.'}), 415
 
     try:
-        pitch = detect_pitch('audio_recibido.mp3')
+        #pitch = detect_pitch('audio_recibido.mp3')
+        pitch = detect_pitch(audio_file)
         return jsonify({'pitch': pitch}), 200
     except Exception as e:
         return jsonify({'error': str(e)}), 500
@@ -53,7 +59,7 @@ info_musical = {note: {'scale': note} for note in notes} # Handler for future de
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 # The Flask endpoint is now correct and will work with this dictionary.
-@app.route('/scale/<string:key_name>', methods=['GET'])
+@api.route('/scale/<string:key_name>', methods=['GET'])
 def get_scale(key_name):
     print('GET method for', key_name)
     is_minor = False
@@ -79,5 +85,5 @@ def get_scale(key_name):
         return jsonify({'error': f'Información para la clave {key_name} no encontrada.'}), 404
 
 
-if __name__=='__main__':
-    app.run(debug=True,port=4400) #38516 (music)
+# if __name__=='__main__':
+#     api.run(debug=True,port=4400) #38516 (music)
