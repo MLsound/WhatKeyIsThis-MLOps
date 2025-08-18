@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+{% block title %}{{ super() }} — {{ data.title }}{% endblock %}
+
+{% block content %}
+<h1 class="text-3xl font-semibold mb-3 text-center text-gray-800">Welcome to 'What Key is This?'</h1>
+<h2 class="text-2xl italic mb-12 text-center text-gray-400">A simple and powerful tool<br>for musicians, producers, and students</h2>
+<div class="centered-box w-128 h-1/2 mx-auto">
+    <p class="mb-6">This web app helps you instantly find the musical key of any audio file. Simply upload a track, and our system will analyze it to provide you with the correct key, along with the corresponding scale, chords, and relative key.</p>
+    <p class="mb-6">Additionally, you can explore the dedicated Scales and Chords sections to discover and learn more about music theory, all on demand.</p>
+    
+    <div class="button-container">
+        <a href="/detect" class="submit-button"><b>Let's try!</b>
+    </a>
+</div>
+</div>
+{% endblock %}

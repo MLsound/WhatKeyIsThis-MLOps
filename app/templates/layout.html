@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/layout.css') }}">
+    <title>{% block title %}🎼 What Key is This?{% endblock %}</title>
+  </head>
+  <body>
+    <nav class="bg-gray-800 p-4 shadow-md">
+        <div class="container mx-auto flex justify-between items-center flex-wrap">
+            <!-- Título o logo del sitio -->
+            <div class="text-white text-xl font-bold">What Key is This?</div>
+            
+            <!-- Botón del menú para dispositivos móviles -->
+            <button class="text-white block lg:hidden focus:outline-none" id="nav-toggle">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                </svg>
+            </button>
+
+            <!-- Menú de navegación, inicialmente oculto en móviles -->
+            <div class="w-full lg:flex lg:items-center lg:w-auto hidden" id="nav-menu">
+                <div class="text-sm lg:flex-grow">
+                    <a href="/" class="block mt-4 lg:inline-block lg:mt-0 text-gray-200 hover:text-white mr-4">Home</a>
+                    <a href="/detect" class="block mt-4 lg:inline-block lg:mt-0 text-gray-200 hover:text-white mr-4">Key listener</a>
+                    <a href="/scales" class="block mt-4 lg:inline-block lg:mt-0 text-gray-200 hover:text-white mr-4">Scales</a>
+                    <a href="/chords" class="block mt-4 lg:inline-block lg:mt-0 text-gray-200 hover:text-white mr-4">Chords</a>
+                    <a href="/help" class="block mt-4 lg:inline-block lg:mt-0 text-gray-200 hover:text-white">Help</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mx-auto mt-10 px-40">
+      <div class="centered-box">{% block content %} {% endblock %}</div>
+    </div>
+    
+    <!-- Script para el toggle del menú en móviles -->
+    <script>
+        document.getElementById('nav-toggle').addEventListener('click', function() {
+            const menu = document.getElementById('nav-menu');
+            menu.classList.toggle('hidden');
+        });
+    </script>
+    {% block scripts %}{% endblock %}
+  </body>
+</html>
