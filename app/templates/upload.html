@@ -40,12 +40,12 @@
     <div id="loadingIndicator" class="hidden flex justify-center items-center text-gray-500">
         <span>Analyzing audio...</span>
         <img src="{{ url_for('static', filename='images/loading_icon.gif') }}" class="w-16 h-12" /> 
-        
     </div>
 
     <div id="resultBox" class="hidden mt-4 p-4 rounded-lg border border-green-400 bg-green-50 text-green-800 result-box">
         <p class="font-medium text-center">Detected Key: <span id="detectedPitch" class="font-bold"></span></p>
     </div>
+    
     <div id="divPlayer" style="margin: 20px;">
         <audio id="audioPlayer" controls class="w-full"></audio>
     </div>
