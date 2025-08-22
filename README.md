@@ -53,14 +53,13 @@ To get a local copy up and running, follow these simple steps.
 
 ### Prerequisites
 
-This project requires Python 3.8+ and `pip`.
+This project requires Python 3.6+ and `pip`.
 
 ### Installation
-
 1.  **Clone the repository:**
     ```sh
-    git clone [https://github.com/your_username/your_project_name.git](https://github.com/your_username/your_project_name.git)
-    cd your_project_name
+    git clone https://github.com/MLsound/WhatKeyIsThis-MLOps.git
+    cd WhatKeyIsThis
     ```
 
 2.  **Create and activate a virtual environment:**
