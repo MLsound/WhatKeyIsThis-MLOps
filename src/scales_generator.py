@@ -1,4 +1,4 @@
-# scales_generator.py
+# src/scales_generator.py
 info_musical = {}
 
 # Definición de las 12 notas

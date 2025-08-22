@@ -1,4 +1,4 @@
-# test_scales_generator.py
+# tests/test_scales_generator.py
 import pytest
 from src.scales_generator import (
     notes, 

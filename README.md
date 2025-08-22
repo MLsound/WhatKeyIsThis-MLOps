@@ -53,7 +53,7 @@ To get a local copy up and running, follow these simple steps.
 
 ### Prerequisites
 
-This project requires Python 3.6+ and `pip`.
+This project requires Python >= 3.6, < 3.12 and pip.
 
 ### Installation
 1.  **Clone the repository:**
@@ -74,6 +74,12 @@ This project requires Python 3.6+ and `pip`.
     ```
     *(Note: You will need to create a `requirements.txt` file. Based on your code, it should include `Flask`, `basic-pitch`, and `pytest`)*
 
+4.  **Reset virtual environment:**
+    ```sh
+    deactivate source
+    source .venv/bin/activate
+    ```
+
 ### Running the Application
 
 1.  **Start the Flask server:**
@@ -85,7 +91,7 @@ This project requires Python 3.6+ and `pip`.
     python app/app.py
     ```
 
-2.  **Open your browser** and navigate to `http://127.0.0.1:5000`.
+2.  **Open your browser** and navigate to [`http://127.0.0.1:5000`](http://127.0.0.1:5000).
 
 ## Usage
 

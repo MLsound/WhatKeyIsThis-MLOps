@@ -1,4 +1,4 @@
-# pitch_detector.py
+# src/pitch_detector.py
 from basic_pitch.inference import predict
 from basic_pitch import ICASSP_2022_MODEL_PATH
 from collections import Counter
