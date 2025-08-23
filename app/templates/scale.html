@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+{% block title %}{{ super() }} — {{ data.title }}{% endblock %}
+
+{% block content %} 
+<h1 class="text-3xl font-semibold mb-3 text-center text-gray-800">{{ data.name }}</h1>
+<h2 class="text-2xl italic mb-12 text-center text-gray-400">{{ data.mode }} scale</h2>
+<!-- <div class="centered-box w-128 h-1/2 mx-auto">
+<p class="mb-6">This web app helps you instantly find the musical key of any audio file. Simply upload a track, and our system will analyze it to provide you with the correct key, along with the corresponding scale, chords, and relative key.</p> -->
+<p class="mb-6">{{ data.scale }}</p>
+<div class="button-container">
+    <a href="/parallel/" class="submit-button"><b>{{ 'Major' if data.mode == 'Minor' else 'Minor' }} scale</b></a>
+<!-- </div>
+<div class="button-container"> -->
+    <a href="/relative/" class="submit-button"><b>Relative mode</b></a>
+<!-- </div>
+<div class="button-container"> -->
+    <!-- <a href="/chords/" class="submit-button"><b>Show me chords</b></a> -->
+</div>
+<!-- <div class="mt-4 flex justify-center">
+    <button id="resetButton" class="px-4 py-2 bg-gray-400 text-white rounded-md hover:bg-gray-500"><b>Restet</b></button>
+</div> -->
+{% endblock %}
