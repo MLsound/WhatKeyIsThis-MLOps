@@ -60,16 +60,23 @@ def detectar_tono():
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Create a mapping for enharmonic notes and common name variations
 key_name_mapping = {
-    'C-sharp': 'C#',
-    'D-flat': 'Db',
-    'D-sharp': 'D#',
-    'E-flat': 'Eb',
-    'F-sharp': 'F#',
-    'G-flat': 'Gb',
-    'G-sharp': 'G#',
-    'A-flat': 'Ab',
-    'A-sharp': 'A#',
-    'B-flat': 'Bb',
+    'a': 'A',
+    'b': 'B',
+    'c': 'C',
+    'd': 'D',
+    'e': 'E',
+    'f': 'F',
+    'g': 'G',
+    'a-flat': 'Ab',
+    'a-sharp': 'A#',
+    'b-flat': 'Bb',
+    'c-sharp': 'C#',
+    'd-flat': 'Db',
+    'd-sharp': 'D#',
+    'e-flat': 'Eb',
+    'f-sharp': 'F#',
+    'g-flat': 'Gb',
+    'g-sharp': 'G#',
 }
 sharp_notes = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']
 flat_notes = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B']

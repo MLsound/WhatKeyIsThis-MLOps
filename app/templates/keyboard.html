@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+{% block title %}{{ super() }} — {{ data.title }}{% endblock %}
+
+{% block content %}
+<h1 class="text-3xl font-semibold mb-6 text-center text-gray-800">How is This Scale?</h1>
+<p class="text-gray-600 text-center mb-6">Haz click en las teclas para ir a un enlace diferente.</p>
+<div style="display: flex; justify-content: center;">
+    <img src="{{ url_for('static', filename='images/PianoKeyboard.png') }}" usemap="#pianomap" style="max-width: 70%; height: auto;">
+</div>
+
+<map name="pianomap">
+    <!-- Black keys (overlap with the white keys) -->
+    <area shape="rect" coords="111,0,215,636" href="http://127.0.0.1:5000/api/scale/c-sharp" alt="Do#/Reb" title="Do#/Reb">
+    <area shape="rect" coords="334,0,437,636" href="http://127.0.0.1:5000/api/scale/d-sharp" alt="Re#/Mib" title="Re#/Mib">
+    <area shape="rect" coords="652,0,755,636" href="http://127.0.0.1:5000/api/scale/f-sharp" alt="Fa#/Solb" title="Fa#/Solb">
+    <area shape="rect" coords="859,0,962,636" href="http://127.0.0.1:5000/api/scale/g-sharp" alt="Sol#/Lab" title="Sol#/Lab">
+    <area shape="rect" coords="1073,0,1177,636" href="http://127.0.0.1:5000/api/scale/a-sharp" alt="La#/Sib" title="La#/Sib">
+
+    <!-- White keys  -->
+    <area shape="rect" coords="0,0,183,954" href="http://127.0.0.1:5000/api/scale/c" alt="Do (Si#)" title="Do (Si#)">
+    <area shape="rect" coords="183,0,366,954" href="http://127.0.0.1:5000/api/scale/d" alt="Re" title="Re">
+    <area shape="rect" coords="366,0,549,954" href="http://127.0.0.1:5000/api/scale/e" alt="Mi (Fab)" title="Mi (Fab)">
+    <area shape="rect" coords="549,0,731,954" href="http://127.0.0.1:5000/api/scale/f" alt="Fa (Mi#)" title="Fa (Mi#)">
+    <area shape="rect" coords="731,0,914,954" href="http://127.0.0.1:5000/api/scale/g" alt="Sol" title="Sol">
+    <area shape="rect" coords="914,0,1097,954" href="http://127.0.0.1:5000/api/scale/a" alt="La" title="La">
+    <area shape="rect" coords="1097,0,1280,954" href="http://127.0.0.1:5000/api/scale/b" alt="Si (Dob)" title="Si (Dob)">
+</map>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/image-map-resizer/1.0.10/js/imageMapResizer.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('map').imageMapResize();
+    });
+</script>
+{% endblock %}
