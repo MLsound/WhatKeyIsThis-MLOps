@@ -7,9 +7,10 @@ project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 # Add the project root to the system path
 sys.path.insert(0, project_root)
 
-# Now your import will work correctly
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 from flask import Blueprint, request, jsonify
 from src.pitch_detector import run as detect_pitch
+from utils import Scale
 
 # For input sanitization
 import tempfile  # Import the tempfile library
@@ -25,14 +26,14 @@ def root():
 @api.route('/detect', methods=['POST'])
 def detectar_tono():
     if 'audio' not in request.files:
-        return jsonify({'error': 'No se ha enviado ningún archivo de audio'}), 400
+        return jsonify({'error': 'No audio file has been sent'}), 400
 
     audio_file = request.files['audio']
     # audio_file.save('audio_recibido.mp3') # guarda el archivo
 
     # Check the file type to ensure it's a supported audio format
     if audio_file.mimetype not in ['audio/mpeg', 'audio/wav', 'audio/ogg', 'audio/flac']:
-        return jsonify({'error': 'Tipo de archivo no soportado. Por favor suba un archivo de audio válido.'}), 415
+        return jsonify({'error': 'Unsupported file type. Please upload a valid audio file.'}), 415
 
     # Use a try-finally block to ensure the temporary file is deleted
     try:
@@ -55,61 +56,25 @@ def detectar_tono():
             os.remove(temp_file_path)
             # print(">>Temp file successfully deleted!")
 
-
-# THIS SECTION WILL BE REPLACED LATER BY A GENERATOR FUNCTION
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# Create a mapping for enharmonic notes and common name variations
-key_name_mapping = {
-    'a': 'A',
-    'b': 'B',
-    'c': 'C',
-    'd': 'D',
-    'e': 'E',
-    'f': 'F',
-    'g': 'G',
-    'a-flat': 'Ab',
-    'a-sharp': 'A#',
-    'b-flat': 'Bb',
-    'c-sharp': 'C#',
-    'd-flat': 'Db',
-    'd-sharp': 'D#',
-    'e-flat': 'Eb',
-    'f-sharp': 'F#',
-    'g-flat': 'Gb',
-    'g-sharp': 'G#',
-}
-sharp_notes = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']
-flat_notes = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B']
-notes = list(set(sharp_notes + flat_notes))
-info_musical = {note: {'scale': note} for note in notes} # Handler for future development
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
 # The Flask endpoint is now correct and will work with this dictionary.
 @api.route('/scale/<string:key_name>', methods=['GET'])
 def get_scale(key_name):
-    print('GET method for', key_name)
-    is_minor = False
-    
-    # Handle the minor key suffix first
-    if key_name.endswith('m'):
-        key_name = key_name[:-1]
-        is_minor = True
+    print(f"GET method for '{key_name}'")
+    new_scale = Scale(key_name) # Creates scale object
+    # print(new_scale.root_note, new_scale.api_name)
 
-    # Normalize the key_name using the mapping
-    # If the key is in the map, use the mapped value; otherwise, use the original key
-    normalized_key_name = key_name_mapping.get(key_name, key_name)
-    print(normalized_key_name)
-    
-    # Now, check if the normalized key exists in the comprehensive dictionary
-    if normalized_key_name in info_musical:
+    # Then, check if the normalized key exists in the comprehensive dictionary
+    if new_scale.scale is not None:
         data = {
-            'scale': info_musical[normalized_key_name]['scale'],
-            'mode': 'minor' if is_minor else 'major'
+            'name': new_scale.root_note,
+            'mode': new_scale.mode,
+            'scale': new_scale.scale,
+            'chords': new_scale.chords,
+            'relative': new_scale.relative,
         }
         return jsonify(data), 200
     else:
-        return jsonify({'error': f'Información para la clave {key_name} no encontrada.'}), 404
-
+        return jsonify({'error': f'Information for key {key_name} not found.'}), 404
 
 # if __name__=='__main__':
 #     api.run(debug=True,port=4400) #38516 (music)
