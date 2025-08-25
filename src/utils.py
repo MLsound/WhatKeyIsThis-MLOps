@@ -72,41 +72,6 @@ class Scale:
             self.chords = None
             self.relative = None
             
-
-def solfeggio(key_name):
-    # Create a mapping for name variations
-    key_mapping = {
-        # Spanish
-        # 'A': 'La',  'B': 'Si', 'C': 'Do', 'D': 'Re',
-        # 'E': 'Mi', 'F': 'Fa', 'G': 'Sol',
-        # 'b': 'Bemol', '#': 'Sostenido',
-        # 'm': ' Menor', 'M': ' Mayor'
-
-        # English
-        'A': 'A', 'B': 'B', 'C': 'C', 'D': 'D',
-        'E': 'E', 'F': 'F','G': 'G',
-        'b': '-flat', '#': '-sharp',
-        'm': ' Minor', 'M': ' Major'
-    }
-
-    output = []
-    input = list(key_name)
-    # is_minor = False
-    
-    if key_name.endswith('m'):
-        input.remove('m')
-        # is_minor = True
-    
-    for v in input:
-        output.append(key_mapping.get(v, v))
-    # if is_minor:
-    #     output.append(key_mapping['m'])
-    # else:
-    #     output.append(key_mapping['M'])
-
-    # return ' '.join(output)
-    return ''.join(output)
-
 def get_url(key_name):
     key_mapping = {
         'b': '-flat',
@@ -118,6 +83,9 @@ def get_url(key_name):
     return ''.join(url).lower()
 
 def flip_accidentals(key_name):
+    """
+    Switch notes from sharp/flat accidental
+    """
     acc_mapping = {
         # Pitch classes
         'A#': 'Bb',
@@ -153,7 +121,7 @@ def flip_accidentals(key_name):
     return acc_mapping.get(key_name, key_name)
 
 # Call to the API
-def get_scale_data(key_name):
+def get_scale_data(key_name, is_minor=False, is_flat=False):
     """
     Makes a GET request to the local API and returns JSON data.
 
@@ -163,6 +131,8 @@ def get_scale_data(key_name):
     Returns:
         dict: The JSON data from the API response, or None if an error occurs.
     """
+    if is_minor: key_name+='m' # Adjusts for minor scale
+    # Build URL for API call
     api_url = 'http://127.0.0.1:5000/api/'
     url = f'{api_url}scale/{key_name}'
         
@@ -182,13 +152,3 @@ def get_scale_data(key_name):
     except json.JSONDecodeError:
         print("Error decoding JSON from the response.")
         return None
-    
-if __name__ == '__main__':
-    # Example usage:
-    key = 'c-sharp'
-    data = get_scale_data(key)
-    print(data)
-    solfeo = solfeggio('C#')
-    print(data)
-    url = 'F'
-    print(get_url(url))

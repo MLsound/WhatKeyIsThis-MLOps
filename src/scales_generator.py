@@ -67,7 +67,7 @@ def get_relative_key(root_note, mode):
     root_index = notes.index(root_note)
     if mode == 'major':
         relative_index = (root_index - 3 + 12) % 12
-        return notes[relative_index] + 'm'
+        return notes[relative_index] #+ 'm'
     elif mode == 'minor':
         relative_index = (root_index + 3) % 12
         return notes[relative_index]
