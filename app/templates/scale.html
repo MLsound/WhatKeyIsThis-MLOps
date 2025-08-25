@@ -2,21 +2,31 @@
 {% block title %}{{ super() }} — {{ data.title }}{% endblock %}
 
 {% block content %} 
-<h1 class="text-3xl font-semibold mb-3 text-center text-gray-800">{{ data.name }}</h1>
-<h2 class="text-2xl italic mb-12 text-center text-gray-400">{{ data.mode }} scale</h2>
-<!-- <div class="centered-box w-128 h-1/2 mx-auto">
-<p class="mb-6">This web app helps you instantly find the musical key of any audio file. Simply upload a track, and our system will analyze it to provide you with the correct key, along with the corresponding scale, chords, and relative key.</p> -->
+<h1 class="text-3xl font-semibold mb-3 text-center text-gray-800">{{ data.name.capitalize() }}</h1>
+<h2 class="text-2xl italic mb-12 text-center text-gray-400">{{ data.mode.capitalize() }} scale</h2>
+<!-- <div class="centered-box w-128 h-1/2 mx-auto"></div> -->
 <p class="mb-6">{{ data.scale }}</p>
 <div class="button-container">
-    <a href="/parallel/" class="submit-button"><b>{{ 'Major' if data.mode == 'Minor' else 'Minor' }} scale</b></a>
-<!-- </div>
-<div class="button-container"> -->
-    <a href="/relative/" class="submit-button"><b>Relative mode</b></a>
-<!-- </div>
-<div class="button-container"> -->
-    <!-- <a href="/chords/" class="submit-button"><b>Show me chords</b></a> -->
+    <!-- Switch accidentals: turns Flat into Sharps and viceversa -->
+    <button type="button" id="toggle_sharp_flat" class="submit-button" data-is-flat="{{ 'true' if data.is_flat else 'false' }}">
+        <b>{{ 'Flat' if data.is_flat == false else 'Sharp' }} notes</b>
+    </button>
+    <!-- Parallel mode: turns Major into Minor and viceversa -->
+    <button type="button" id="toggle_major_minor" class="submit-button" data-mode="{{ data.mode }}">
+        <b>{{ 'Major' if data.mode.lower() == 'minor' else 'Minor' }} scale</b>
+    </button>
+    <!-- Relative mode: switch to the sixth mode and viceversa -->
+    <button type="button" id="toggle_relative" class="submit-button" data-relative="{{ data.relative }}" data-mode="{{ data.mode }}">
+        <b>Relative mode</b>
+    </button>
+    <!-- <a href="/chords/" class="submit-button"><b>Chords</b></a> -->
 </div>
-<!-- <div class="mt-4 flex justify-center">
-    <button id="resetButton" class="px-4 py-2 bg-gray-400 text-white rounded-md hover:bg-gray-500"><b>Restet</b></button>
-</div> -->
+
+<div class="mt-4 flex justify-center">
+    <a href="/scales" class="px-4 py-2 bg-gray-400 text-white rounded-md hover:bg-gray-500"><b>Go back</b></a>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/scale.js') }}"></script>
 {% endblock %}
