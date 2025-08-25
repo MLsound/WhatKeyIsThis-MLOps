@@ -39,6 +39,10 @@ body {
     color: white;
     background-color: hsl(33, 80%, 50%); /* The new button color */
     outline: none;
+    margin-right: 5px; 
+    margin-left: 5px; 
+    margin-top: 5px; 
+    /* margin-bottom: 5px;  */
 }
 
 .submit-button:hover {
@@ -48,6 +52,8 @@ body {
 .button-container {
     display: flex;
     justify-content: center; /* Centers the button horizontally */
+    margin-top: 3px;
+    /* margin-bottom: 3px;  */
 }
 
 .result-box {
