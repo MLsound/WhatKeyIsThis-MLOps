@@ -66,7 +66,9 @@ def get_scale(key_name):
     # Then, check if the normalized key exists in the comprehensive dictionary
     if new_scale.scale is not None:
         data = {
-            'name': new_scale.root_note,
+            'root': new_scale.root_note,
+            'enharmonic': new_scale.enharmonic,
+            'is_flat': new_scale.is_flat,
             'mode': new_scale.mode,
             'scale': new_scale.scale,
             'chords': new_scale.chords,

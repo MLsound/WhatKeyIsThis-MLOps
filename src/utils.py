@@ -49,8 +49,20 @@ class Scale:
             self.is_minor = True
         self.mode = 'minor' if self.is_minor else 'major'
 
+        # Detects accidentals
+        if clean_key_name.endswith('-flat'):
+            self.is_flat = True
+            self.is_sharp = False
+        elif clean_key_name.endswith('-sharp'):
+            self.is_sharp = True
+            self.is_flat = False
+        else:
+            self.is_flat = False
+            self.is_sharp = False
+
         # Normalize the key_name using the mapping
         # If the key is in the map, use the mapped value; otherwise, use the original key
+        self.enharmonic = flip_accidentals(clean_key_name)
         self.root_note = self._key_name_mapping.get(clean_key_name, clean_key_name)
         
         # Fallback to the original input if not in mapping, and capitalize
@@ -131,7 +143,11 @@ def get_scale_data(key_name, is_minor=False, is_flat=False):
     Returns:
         dict: The JSON data from the API response, or None if an error occurs.
     """
-    if is_minor: key_name+='m' # Adjusts for minor scale
+    if key_name.endswith('m'):
+        if not is_minor:
+            key_name = key_name[:-1]
+    else:
+        if is_minor: key_name+='m' # Adjusts for minor scale
     # Build URL for API call
     api_url = 'http://127.0.0.1:5000/api/'
     url = f'{api_url}scale/{key_name}'
