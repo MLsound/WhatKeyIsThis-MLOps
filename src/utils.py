@@ -1,5 +1,7 @@
 import requests
 import json
+import os
+from music21 import scale, stream, note, meter
 import src.scales_generator as sg
 
 class Scale:
@@ -93,6 +95,71 @@ def get_url(key_name):
     for v in key_name:
         url.append(key_mapping.get(v, v))
     return ''.join(url).lower()
+
+def format_music21(key_name):
+    # Mapping for enharmonic and simplified input
+    _key_name_mapping = {
+        # URL style names
+        'a': 'A',
+        'b': 'B',
+        'c': 'C',
+        'd': 'D',
+        'e': 'E',
+        'f': 'F',
+        'g': 'G',
+
+        # Accidentals
+        'a-flat': 'A-',
+        'a-sharp': 'A#',
+        'b-flat': 'B-',
+        'c-sharp': 'C#',
+        'd-flat': 'D-',
+        'd-sharp': 'D#',
+        'e-flat': 'E-',
+        'f-sharp': 'F#',
+        'g-flat': 'G-',
+        'g-sharp': 'G#'
+    }
+    return _key_name_mapping.get(key_name, key_name)
+
+def get_music_score(key_name, mode):
+    """Generates a music score image for a given scale and returns the file path."""
+    try:
+        if mode == 'minor':
+            scl = scale.MinorScale(format_music21(key_name))
+        else:
+            scl = scale.MajorScale(format_music21(key_name))
+    except Exception as e:
+        print(f"Error creating scale: {e}")
+        return None
+
+    print("Music score created sucessfuly.")
+    s = stream.Stream()
+    s.append(meter.TimeSignature('4/4'))
+
+    for p in scl.pitches:
+        n = note.Note(p)
+        n.duration.type = 'quarter'
+        s.append(n)
+    
+    # Ensure the output directory exists
+    root_path = "./app/"
+    output_dir = os.path.join(root_path, 'static', 'images')
+    if not os.path.exists(output_dir):
+        os.makedirs(output_dir)
+    print(output_dir)
+    # Construct the file path
+    #filename = f"{key_name}_{mode}_scale.png"
+    filename = "scale.png"
+    file_path = os.path.join(output_dir, filename)
+    print("Image created sucessfuly:", file_path)
+    try:
+        s.write('musicxml.png', fp=file_path)
+        # Return the path relative to the 'static' folder
+        return os.path.join('output', filename)
+    except Exception as e:
+        print(f"Error writing music score: {e}")
+        return None
 
 def flip_accidentals(key_name):
     """

@@ -1,7 +1,7 @@
 # app/app.py
 from flask import Flask, render_template, request
 from .api import api
-from src.utils import get_scale_data, get_url
+from src.utils import get_scale_data, get_url, get_music_score
 
 app = Flask(__name__)
 
@@ -52,7 +52,9 @@ def show_scale(key_name):
             'is_flat': scale['is_flat'],
             'mode': scale['mode'],
             'relative': get_url(scale['relative']),
-            'scale': scale
+            'scale': scale,
+            # Generate the music score and get its path
+            'score_path': get_music_score(key_name, mode)
             }
         return render_template('scale.html', data=data)
 
