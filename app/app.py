@@ -56,6 +56,31 @@ def show_scale(key_name):
             }
         return render_template('scale.html', data=data)
 
+from flask import redirect, url_for
+@app.route('/scale/detected/<string:pitch>')
+def parser(pitch):
+    print('Detection parameter received:', pitch)
+    # Split the pitch string into the root note and the mode.
+    # Example: 'C_minor' -> ['c', 'minor']
+    root, mode = pitch.lower().split('_')
+
+    # Default to major if the mode is not recognized.
+    if not (mode == 'major' or mode == 'minor'):
+        print("Unrecognized mode:", mode)
+        mode = 'major'
+
+    is_minor = mode == 'minor'
+    key_name = get_url(root)
+    
+    # Build the URL for redirection
+    if is_minor:
+        redirect_url = url_for('show_scale', key_name=key_name, mode='minor')
+    else:
+        redirect_url = url_for('show_scale', key_name=key_name)
+
+    print(f"Redirecting to: {redirect_url}")
+    return redirect(redirect_url)
+
 def page_not_found(error):
     return render_template('404.html'), 404
 
