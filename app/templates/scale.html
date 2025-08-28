@@ -7,11 +7,29 @@
 <!-- <div class="centered-box w-128 h-1/2 mx-auto"></div> -->
 {% if data.score_path %}
 <div class="centered-box w-128 h-1/2 mx-auto">
-        <img src="{{ url_for('static', filename='images/scale-1.png') }}" alt="{{ data.name }} {{ data.mode }} scale musical score" class="mx-auto my-4">
+        <img src="{{ url_for('static', filename='images/output/scale-1.png') }}" alt="{{ data.name }} {{ data.mode }} scale musical score" class="mx-auto my-4">
 </div>
 {% endif %}
-<p class="mb-6">{{ data.scale }}</p>
+<!-- <p class="mb-6">{{ data.scale.scale }}</p>
+<p class="mb-6">{{ data.scale.chords }}</p> -->
 
+<div class="notes-text text-center">
+    <h3 class="font-semibold mb-3">Notes</h3>
+    <p class="mb-6">
+    {% for note in data.scale.scale %}
+        {{ note }}{% if not loop.last %} - {% endif %}
+    {% endfor %}
+    </p>
+</div>
+<div class="text-center ">
+    <h3 class="font-semibold mb-3">Chords</h3>
+    <p class="mb-6">
+    {% for chord in data.scale.chords %}
+        {{ chord }}{% if not loop.last %} - {% endif %}
+    {% endfor %}
+    </p>
+</div>
+<!-- {{ data.scale.scale }} -->
 <div class="button-container">
     <!-- Parallel mode: turns Major into Minor and viceversa -->
     <button type="button" id="toggle_major_minor" class="submit-button" data-mode="{{ data.mode }}">

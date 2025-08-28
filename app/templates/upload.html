@@ -4,7 +4,7 @@
 {% block content %}
 <h1 class="text-3xl font-semibold mb-6 text-center text-gray-800">What Key is This?</h1>
 <p class="text-gray-600 text-center mb-6">Upload your audio file to find its key.</p>
-
+<!-- UPLOAD SECTION -->
 <form id="uploadForm" class="space-y-4">
     <div>
         <div id="drop-area" class="mt-1 flex justify-center items-center rounded-md border-2 border-dashed border-orange-600/80 hover:border-orange-800/80 px-6 py-32" alt="Upload a file">
@@ -35,25 +35,29 @@
     </div>
 </form>
 
+<!-- DETECTION SECTION -->
 <div id="playerBox" class="hidden mt-4 p-4 rounded-lg border border-gray-300 bg-white text-gray-800">
+
+    <div id="divPlayer" style="margin: 20px;">
+        <audio id="audioPlayer" controls class="w-full"></audio>
+    </div>
 
     <div id="loadingIndicator" class="hidden flex justify-center items-center text-gray-500">
         <span>Analyzing audio...</span>
         <img src="{{ url_for('static', filename='images/loading_icon.gif') }}" class="w-16 h-12" /> 
     </div>
 
+    <!-- Show scale for detected tonality -->
     <div id="resultBox" class="hidden mt-4 p-4 rounded-lg border border-green-400 bg-green-50 text-green-800 result-box">
         <p class="font-medium text-center">Detected Key: <span id="detectedPitch" class="font-bold"></span></p>
     </div>
-    
-    <div id="divPlayer" style="margin: 20px;">
-        <audio id="audioPlayer" controls class="w-full"></audio>
+
+    <div class=" t-4 flex justify-center">
+        <a id="scaleLink" href="#" class="hidden submit-button">
+            <b>Show Scale</b>
+        </a>
+        <button id="resetButton" class="reset-button"><b>Reset</b></button>
     </div>
-    <div class="mt-4 flex justify-center">
-        <!-- <button type="submit" id="submitButton" class="submit-button"><b>What Key is This?</b></button> -->
-        <button id="resetButton" class="px-4 py-2 bg-gray-400 text-white rounded-md hover:bg-gray-500"><b>Restet</b></button>
-    </div>
-    
 </div>
 {% endblock %}
 

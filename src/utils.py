@@ -97,6 +97,7 @@ def get_url(key_name):
     return ''.join(url).lower()
 
 def format_music21(key_name):
+    """Adapts pitch classes for muisc21 library format."""
     # Mapping for enharmonic and simplified input
     _key_name_mapping = {
         # URL style names
@@ -144,17 +145,27 @@ def get_music_score(key_name, mode):
     
     # Ensure the output directory exists
     root_path = "./app/"
-    output_dir = os.path.join(root_path, 'static', 'images')
+    output_dir = os.path.join(root_path, 'static', 'images', 'output')
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
-    print(output_dir)
+    
     # Construct the file path
     #filename = f"{key_name}_{mode}_scale.png"
     filename = "scale.png"
     file_path = os.path.join(output_dir, filename)
-    print("Image created sucessfuly:", file_path)
+    print("Image saved sucessfuly:", file_path)
+
     try:
         s.write('musicxml.png', fp=file_path)
+    
+        # try:
+        #     os.remove(file_path)
+        #     print(f"File '{file_path}' has been removed successfully.")
+        # except FileNotFoundError:
+        #     print(f"Error: The file '{file_path}' was not found.")
+        # except Exception as e:
+        #     print(f"An error occurred: {e}")
+
         # Return the path relative to the 'static' folder
         return os.path.join('output', filename)
     except Exception as e:
@@ -198,6 +209,31 @@ def flip_accidentals(key_name):
         'g-flat': 'f-sharp'
     }
     return acc_mapping.get(key_name, key_name)
+
+def user_repr(note):
+    note_mapping = {
+        'A': 'La',
+        'B': 'Si',
+        'C': 'Do',
+        'D': 'Re',
+        'E': 'Mi',
+        'F': 'Fa',
+        'G': 'Sol',
+        'b': '♭',
+        '#': '♯',
+       }
+    output = []
+    for char in note:
+        output.append(note_mapping.get(char, char))
+    return ''.join(output)
+
+def solfeggio(notes: dict[str]):
+    """Converts american note names (c) into classical names (do)."""
+    
+    new_notes = []
+    for note in notes:
+        new_notes.append(note_mapping.get(note, note))
+    return notes
 
 # Call to the API
 def get_scale_data(key_name, is_minor=False, is_flat=False):

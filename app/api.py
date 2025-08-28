@@ -46,8 +46,9 @@ def detectar_tono():
             # print(">>Temp file created:", temp_file_path)
 
         # Pass the path of the temporary file to your pitch detection function
-        pitch = detect_pitch(temp_file_path)
-        return jsonify({'pitch': pitch}), 200
+        pitch, mode = detect_pitch(temp_file_path)
+        print(pitch, mode)
+        return jsonify({'pitch': pitch, 'mode': mode}), 200
     except Exception as e:
         return jsonify({'error': str(e)}), 500
     finally:

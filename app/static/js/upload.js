@@ -27,6 +27,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const playerBox = document.getElementById('playerBox');
     const resetButton = document.getElementById('resetButton');
     const audioPlayerElement = document.getElementById('audioPlayer');
+    const scaleLink = document.getElementById('scaleLink');
 
     // Function to show a message in the dedicated message box.
     function showMessage(message, type) {
@@ -41,6 +42,13 @@ document.addEventListener('DOMContentLoaded', function() {
             messageBox.classList.remove('border-red-400', 'bg-red-50', 'text-red-800');
             messageBox.classList.add('border-green-400', 'bg-green-50', 'text-green-800');
         }
+    }
+
+    function capitalize(s) {
+        if (typeof s !== 'string' || s.length === 0) {
+            return '';
+        }
+        return s.charAt(0).toUpperCase() + s.slice(1);
     }
 
     // Function to handle the file upload process, which now automatically calls the API.
@@ -68,8 +76,20 @@ document.addEventListener('DOMContentLoaded', function() {
             // Check if the response was successful.
             if (response.ok) {
                 // On success, update the UI to show the result
-                document.getElementById('detectedPitch').textContent = result.pitch;
+                // document.getElementById('detectedPitch').textContent = result.pitch;
+                // resultBox.classList.remove('hidden');
+
+
+                // On success, check if a key was actually detected
+                const detectedPitch = capitalize(result.pitch) + ' ' + capitalize(result.mode);
+                document.getElementById('detectedPitch').textContent = detectedPitch;
                 resultBox.classList.remove('hidden');
+
+                // Set the button's link and show it
+                const redirectUrl = `/scale/detected/${result.pitch.replace(' ', '_')}_${result.mode}`;
+                scaleLink.href = redirectUrl;
+                // scaleLink.textContent = `Show ${detectedPitch} Scale`;
+                scaleLink.classList.remove('hidden');
             } else {
                 // Display a detailed error message from the server.
                 showMessage(result.error || "An error occurred.", 'error');
@@ -107,6 +127,7 @@ document.addEventListener('DOMContentLoaded', function() {
         resultBox.classList.add('hidden');
         playerBox.classList.add('hidden');
         messageBox.classList.add('hidden');
+        scaleLink.classList.add('hidden');
         audioPlayerElement.pause(); // Stop the audio playback
         audioPlayerElement.currentTime = 0; // Rewind the audio to the beginning
         audioFile.value = ''; // Clear the file input

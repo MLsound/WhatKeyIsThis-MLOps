@@ -67,8 +67,8 @@ def find_chord_from_notes(notes, just_thirds=False):
         # Check for a minor chord (3, 4)
         if interval_1 == 3:
             return f"{get_pitch_class_name(root_note)} Minor"
-
-    return None
+        
+        return None
 
 def get_pitch_class_name(midi_num):
     """Converts a MIDI number to its pitch class name."""
@@ -139,8 +139,8 @@ def run(audio_file_path):
             detected_pitch = []
         else:
             print(detected_pitch)
-        
-    return detected_pitch
+            
+    return detected_pitch[0].split(' ') if detected_pitch else (None, None)
 
 def show(list_values):
     for value in list_values:
