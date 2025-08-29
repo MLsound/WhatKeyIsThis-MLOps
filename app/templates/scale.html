@@ -13,22 +13,25 @@
 <!-- <p class="mb-6">{{ data.scale.scale }}</p>
 <p class="mb-6">{{ data.scale.chords }}</p> -->
 
-<div class="notes-text text-center">
-    <h3 class="font-semibold mb-3">Notes</h3>
-    <p class="mb-6">
-    {% for note in data.scale.scale %}
-        {{ note }}{% if not loop.last %} - {% endif %}
-    {% endfor %}
-    </p>
+<div class="flex flex-col md:flex-row justify-center items-start mt-8 space-y-8 md:space-y-0 md:space-x-8">
+    <div class="notes-text text-center w-max">
+        <h3 class="font-semibold mb-3">Notes</h3>
+        <p class="mb-6">
+        {% for note in data.scale.scale %}
+            {{ note }}{% if not loop.last %} - {% endif %}
+        {% endfor %}
+        </p>
+    </div>
+    <div class="text-center w-max"> <!-- h-[40px] -->
+        <h3 class="font-semibold mb-3">Chords</h3>
+        <p class="mb-6">
+        {% for chord in data.scale.chords %}
+            {{ chord }}{% if not loop.last %} - {% endif %}
+        {% endfor %}
+        </p>
+    </div>
 </div>
-<div class="text-center ">
-    <h3 class="font-semibold mb-3">Chords</h3>
-    <p class="mb-6">
-    {% for chord in data.scale.chords %}
-        {{ chord }}{% if not loop.last %} - {% endif %}
-    {% endfor %}
-    </p>
-</div>
+
 <!-- {{ data.scale.scale }} -->
 <div class="button-container">
     <!-- Parallel mode: turns Major into Minor and viceversa -->
@@ -49,7 +52,7 @@
 </div>
 
 <div class="mt-4 flex justify-center">
-    <a href="/scales" class="px-4 py-2 bg-gray-400 text-white rounded-md hover:bg-gray-500"><b>Go back</b></a>
+    <a href="/scales" class="reset-button"><b>Choose another</b></a>
 </div>
 {% endblock %}
 
