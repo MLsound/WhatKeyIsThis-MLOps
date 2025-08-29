@@ -1,0 +1,45 @@
+{% extends "layout.html" %}
+{% block title %}{{ super() }} — How to Use{% endblock %}
+
+{% block content %}
+<h1 class="text-3xl font-semibold mb-3 text-center text-gray-800">How to Use <i>'What Key is This?'</i></h1>
+<h2 class="text-2xl italic mb-12 text-center text-gray-400">Your guide to detecting musical keys from audio files.</h2>
+<div class="container mx-auto p-4">
+    <p class="mb-6 text-center text-lg text-gray-600">The main function of this application is to detect the musical key of an audio file you provide and show the notes and chords of that scale with music score.</p>
+    
+    <div class="space-y-8">
+        <section>
+            <h2 class="text-2xl font-semibold mb-4 text-gray-700">Steps to Get Your Results</h2>
+            <ol class="list-decimal list-inside space-y-4 text-gray-600">
+                <li><strong class="text-gray-800">Inside the <a href="/detect" class="text-orange-800">"Key listener" page </a></strong> you can find this in the main navigation menu.</li>
+                <li><strong class="text-gray-800">Upload your audio file.</strong> You have two options:
+                    <ul class="list-disc list-inside ml-6 mt-2 space-y-2">
+                        <li><strong class="text-gray-800">Drag and Drop:</strong> Simply drag your audio file directly onto the designated upload area.</li>
+                        <li><strong class="text-gray-800">Click to Upload:</strong> Click on the upload area to open your device's file explorer and select the audio file.</li>
+                    </ul>
+                </li>
+                <li><strong class="text-gray-800">Wait for the analysis.</strong> Once uploaded, a loading indicator will appear as the system analyzes the file.</li>
+                <li><strong class="text-gray-800">View the results.</strong> The application will display the detected key when the analysis is complete.</li>
+                <li>If you click on <strong class="text-gray-800">"Show scale"</strong>, it will load the page for that tonality's musical scale, chords, and relative key.</li>
+            </ol>
+        </section>
+
+        <hr class="my-8 border-t-2 border-gray-200">
+
+        <section>
+            <h2 class="text-2xl font-semibold mb-4 text-gray-700">File Specifications</h2>
+            <ul class="list-disc list-inside space-y-2 text-gray-600">
+                <li><strong class="text-gray-800">Supported Formats:</strong> MP3, WAV, and OGG.</li>
+                <li><strong class="text-gray-800">Maximum Size:</strong> Up to 10MB.</li>
+            </ul>
+        </section>
+
+        <hr class="my-8 border-t-2 border-gray-200">
+
+        <section>
+            <h2 class="text-2xl font-semibold mb-4 text-gray-700">Other Sections</h2>
+            <p class="text-gray-600">The <strong class="text-orange-800"><a href="/scales">Scales</a></strong> and <strong class="text-orange-800"><a href="/chords">Chords</a></strong> pages are designed to be used independently of the key detection tool. They provide a comprehensive database for you to explore scales and chords in any key you choose.</p>
+        </section>
+    </div>
+</div>
+{% endblock %}

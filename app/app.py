@@ -1,5 +1,5 @@
 # app/app.py
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for
 from .api import api
 from src.utils import get_scale_data, get_url, get_music_score
 
@@ -58,7 +58,6 @@ def show_scale(key_name):
             }
         return render_template('scale.html', data=data)
 
-from flask import redirect, url_for
 @app.route('/scale/detected/<string:pitch>')
 def parser(pitch):
     print('Detection parameter received:', pitch)
@@ -82,6 +81,11 @@ def parser(pitch):
 
     print(f"Redirecting to: {redirect_url}")
     return redirect(redirect_url)
+
+@app.route('/help')
+def help():
+    data = {'title': 'How to?'}
+    return render_template('help.html', data=data)
 
 def page_not_found(error):
     return render_template('404.html'), 404
