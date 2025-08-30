@@ -3,5 +3,4 @@
 *.wav
 .DS_Store
 __pycache__
-app/static/images/output/scale.musicxml
-app/static/images/output/scale-1.png
+app/static/images/output/
