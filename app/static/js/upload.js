@@ -28,6 +28,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const resetButton = document.getElementById('resetButton');
     const audioPlayerElement = document.getElementById('audioPlayer');
     const scaleLink = document.getElementById('scaleLink');
+    const audioFilename = document.getElementById('audioFilename');
 
     // Function to show a message in the dedicated message box.
     function showMessage(message, type) {
@@ -63,6 +64,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         const formData = new FormData();
         formData.append('audio', file);
+        audioFilename.textContent = file.name; // Display the filename
 
         try {
             // Send the audio file to the Flask backend for key detection.
@@ -75,11 +77,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
             // Check if the response was successful.
             if (response.ok) {
-                // On success, update the UI to show the result
-                // document.getElementById('detectedPitch').textContent = result.pitch;
-                // resultBox.classList.remove('hidden');
-
-
                 // On success, check if a key was actually detected
                 const detectedPitch = capitalize(result.pitch) + ' ' + capitalize(result.mode);
                 document.getElementById('detectedPitch').textContent = detectedPitch;
@@ -88,7 +85,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Set the button's link and show it
                 const redirectUrl = `/scale/detected/${result.pitch.replace(' ', '_')}_${result.mode}`;
                 scaleLink.href = redirectUrl;
-                // scaleLink.textContent = `Show ${detectedPitch} Scale`;
                 scaleLink.classList.remove('hidden');
             } else {
                 // Display a detailed error message from the server.
