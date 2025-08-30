@@ -22,7 +22,7 @@
         {% endfor %}
         </p>
     </div>
-    <div class="text-center w-max"> <!-- h-[40px] -->
+    <div class="notes-text text-center w-max"> <!-- h-[40px] -->
         <h3 class="font-semibold mb-3">Chords</h3>
         <p class="mb-6">
         {% for chord in data.scale.chords %}
@@ -34,6 +34,12 @@
 
 <!-- {{ data.scale.scale }} -->
 <div class="button-container">
+    <!-- Switch accidentals: turns Flat into Sharps and viceversa -->
+    {% if data.enharmonic.lower() != data.name.lower() %} 
+    <button type="button" id="toggle_sharp_flat" class="submit-button" data-is-flat="{{ 'true' if data.is_flat else 'false' }}" data-enharmonic="{{ data.enharmonic }}">
+        <b>As {{ 'Flat' if data.is_flat == false else 'Sharp' }} notes</b>
+    </button>
+    {% endif %}
     <!-- Parallel mode: turns Major into Minor and viceversa -->
     <button type="button" id="toggle_major_minor" class="submit-button" data-mode="{{ data.mode }}">
         <b>{{ 'Major' if data.mode.lower() == 'minor' else 'Minor' }} scale</b>
@@ -42,16 +48,10 @@
     <button type="button" id="toggle_relative" class="submit-button" data-relative="{{ data.relative }}" data-mode="{{ data.mode }}">
         <b>Relative mode</b>
     </button>
-    <!-- Switch accidentals: turns Flat into Sharps and viceversa -->
-    {% if data.enharmonic.lower() != data.name.lower() %} 
-    <button type="button" id="toggle_sharp_flat" class="submit-button" data-is-flat="{{ 'true' if data.is_flat else 'false' }}" data-enharmonic="{{ data.enharmonic }}">
-        <b>As {{ 'Flat' if data.is_flat == false else 'Sharp' }} notes</b>
-    </button>
-    {% endif %}
     <!-- <a href="/chords/" class="submit-button"><b>Chords</b></a> -->
 </div>
 
-<div class="mt-4 flex justify-center">
+<div class="mt-4 mb-6 flex justify-center">
     <a href="/scales" class="reset-button"><b>Choose another</b></a>
 </div>
 {% endblock %}
