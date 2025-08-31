@@ -4,16 +4,13 @@
 {% block content %} 
 <h1 class="text-3xl font-semibold mb-3 text-center text-gray-800">{{ data.name.capitalize() }}</h1>
 <h2 class="text-2xl italic mb-12 text-center text-gray-400">{{ data.mode.capitalize() }} scale</h2>
-<!-- <div class="centered-box w-128 h-1/2 mx-auto"></div> -->
 {% if data.score_path %}
 <div class="centered-box w-128 h-1/2 mx-auto">
         <img src="{{ url_for('static', filename='images/output/scale-1.png') }}" alt="{{ data.name }} {{ data.mode }} scale musical score" class="mx-auto my-4">
 </div>
 {% endif %}
-<!-- <p class="mb-6">{{ data.scale.scale }}</p>
-<p class="mb-6">{{ data.scale.chords }}</p> -->
 
-<div class="flex flex-col md:flex-row justify-center items-start mt-8 space-y-8 md:space-y-0 md:space-x-8">
+<div class="flex flex-col md:flex-row justify-center items-start mt-8 space-y-8 md:space-y-0 md:space-x-8" style="justify-content: center;">
     <div class="notes-text text-center w-max">
         <h3 class="font-semibold mb-3">Notes</h3>
         <p class="mb-6">
@@ -32,7 +29,6 @@
     </div>
 </div>
 
-<!-- {{ data.scale.scale }} -->
 <div class="button-container">
     <!-- Switch accidentals: turns Flat into Sharps and viceversa -->
     {% if data.enharmonic.lower() != data.name.lower() %} 
