@@ -157,14 +157,6 @@ def get_music_score(key_name, mode):
 
     try:
         s.write('musicxml.png', fp=file_path)
-    
-        # try:
-        #     os.remove(file_path)
-        #     print(f"File '{file_path}' has been removed successfully.")
-        # except FileNotFoundError:
-        #     print(f"Error: The file '{file_path}' was not found.")
-        # except Exception as e:
-        #     print(f"An error occurred: {e}")
 
         # Return the path relative to the 'static' folder
         return os.path.join('output', filename)
@@ -227,13 +219,23 @@ def user_repr(note):
         output.append(note_mapping.get(char, char))
     return ''.join(output)
 
-def solfeggio(notes: dict[str]):
-    """Converts american note names (c) into classical names (do)."""
-    
+def solfeggio(notes: list[str]) -> list[str]:
+    """
+    Converts American note names (C) into solfeggio names (Do).
+    """
+    note_mapping = {
+    'C': 'Do', 'C#': 'Do♯', 'Db': 'Re♭',
+    'D': 'Re', 'D#': 'Re♯', 'Eb': 'Mi♭',
+    'E': 'Mi', 'E#': 'Mi♯', 'Fb': 'Mi♭',
+    'F': 'Fa', 'F#': 'Fa♯', 'Gb': 'Sol♭',
+    'G': 'Sol', 'G#': 'Sol♯', 'Ab': 'La♭',
+    'A': 'La', 'A#': 'La♯', 'Bb': 'Si♭',
+    'B': 'Si', 'B#': 'Si♯', 'Cb': 'Si♭',
+    }
     new_notes = []
     for note in notes:
         new_notes.append(note_mapping.get(note, note))
-    return notes
+    return new_notes
 
 # Call to the API
 def get_scale_data(key_name, is_minor=False, is_flat=False):
