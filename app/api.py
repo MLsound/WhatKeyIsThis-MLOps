@@ -21,15 +21,15 @@ api = Blueprint('api', __name__)
 
 @api.route("/")
 def root():
-    return "Wellcome dear human…"
+    return "Welcome dear human…"
 
 @api.route('/detect', methods=['POST'])
-def detectar_tono():
+def detect():
     if 'audio' not in request.files:
         return jsonify({'error': 'No audio file has been sent'}), 400
 
     audio_file = request.files['audio']
-    # audio_file.save('audio_recibido.mp3') # guarda el archivo
+    # audio_file.save('user_audio.mp3') # save the file locally
 
     # Check the file type to ensure it's a supported audio format
     if audio_file.mimetype not in ['audio/mpeg', 'audio/wav', 'audio/ogg', 'audio/flac']:

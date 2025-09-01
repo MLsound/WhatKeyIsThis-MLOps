@@ -125,16 +125,11 @@ def run(audio_file_path):
 
     print()
     detected_pitch = []
-    # while detected_pitch == []:
-    #     for k in range(3,10+1):
-    #         print(f"Trying detection for k = {k}")
-    #         detected_pitch = detect_pitch(midi_notes, k)
-    #         print(detected_pitch)
-    k = 3
+    k = 3 # Start with the 3 most common notes
     while not detected_pitch and k <= 10:
         print(f"Trying detection for k = {k}")
         is_detected, detected_pitch = detect_pitch(midi_notes, k)
-        k += 1 # Incrementa k manualmente
+        k += 1 # Increment k until there's a match
         if not is_detected:
             detected_pitch = []
         else:
@@ -150,11 +145,8 @@ if __name__=="__main__":
     # For testing
     files = ['test.wav', '2test.wav', '3test.mp3']
     for file in files:
-        print("\n\nARCHIVO:", file)
+        print("\n\nFILE:", file)
         audio_file_path = f"media/{file}"
-        #audio_file_path = "media/test.wav"
-        #audio_file_path = "media/2test.wav"
-        #audio_file_path = "media/3test.mp3"
 
         detected_pitch = run(audio_file_path)
         if detected_pitch is not None:

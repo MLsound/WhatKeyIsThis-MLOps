@@ -1,5 +1,4 @@
 # tests/test_pitch_detector.py
-
 import pytest
 from src.pitch_detector import find_chord_from_notes, get_pitch_class_name, find_common_notes
 

@@ -80,7 +80,6 @@ This project requires Python >= 3.6, < 3.12 and pip.
     ```sh
     pip install -r requirements.txt
     ```
-    *(Note: You will need to create a `requirements.txt` file. Based on your code, it should include `Flask`, `basic-pitch`, and `pytest`)*
 
 4.  **Reset virtual environment:**
     ```sh

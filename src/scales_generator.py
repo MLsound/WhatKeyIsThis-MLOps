@@ -1,20 +1,20 @@
 # src/scales_generator.py
-info_musical = {}
+musical_info = {}
 
-# Definición de las 12 notas
-# Las representamos como bemoles y sostenidos para manejar ambas notaciones
+# Definition of the 12 notes
+# We represent them as flats and sharps to handle both notations
 notes = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']
 flat_notes = ['C', 'D♭', 'D', 'E♭', 'E', 'F', 'G♭', 'G', 'A♭', 'A', 'B♭', 'B']
 
-# Los intervalos de semitonos para cada tipo de escala (Mayor y Menor Natural)
+# The semitone intervals for each scale type (Major and Natural Minor)
 intervals_major = [0, 2, 4, 5, 7, 9, 11]  # W-W-H-W-W-W-H
 intervals_minor = [0, 2, 3, 5, 7, 8, 10]  # W-H-W-W-H-W-W
 
-# Estructura de los acordes triada (ej. C, Dm, Em...)
+# Structure of triad chords (e.g., C, Dm, Em...)
 chords_major = ['M', 'm', 'm', 'M', 'M', 'm', 'dim']
 chords_minor = ['m', 'dim', 'M', 'm', 'm', 'M', 'M']
 
-# Función para generar la escala
+# Function to generate the scale
 def generate_scale(root_note, intervals):
     scale = []
     root_index = notes.index(root_note)
@@ -24,9 +24,9 @@ def generate_scale(root_note, intervals):
         scale.append(new_note)
     return scale
 
-# Función para corregir escalas escritas con bemoles
+# Function to fix scales written with flats
 def fix_scales(major_scale, minor_scale):
-    # Escalas tradicionalmente escritas con bemoles
+    # Scales traditionally written with flats
     flat_majors = ['F', 'A#', 'D#','G#','C#', 'F#']
     flat_minors = ['Dm', 'Gm', 'Cm', 'Fm', 'A#m']
     if major_scale[0] in flat_majors:
@@ -46,23 +46,23 @@ def fix_scales(major_scale, minor_scale):
         minor_scale[1] = 'E#'
     return major_scale, minor_scale
 
-# Función para generar los acordes (diatónicos)
+# Function to generate the chords (diatonic)
 def generate_chords(scale, chord_types):
     chords = []
     for i in range(len(scale)):
         note = scale[i]
         chord_type = chord_types[i]
         
-        # Manejar el sufijo para cada tipo de acorde
+        # Handle the suffix for each chord type
         if chord_type == 'M':
-            chords.append(note) # Acorde Mayor (sin sufijo)
+            chords.append(note) # Major chord (no suffix)
         elif chord_type == 'm':
-            chords.append(f"{note}m") # Acorde menor
+            chords.append(f"{note}m") # Minor chord
         elif chord_type == 'dim':
-            chords.append(f"{note}dim") # Acorde disminuido
+            chords.append(f"{note}dim") # Diminished chord
     return chords
 
-# Función para obtener la nota relativa
+# Function to get the relative key
 def get_relative_key(root_note, mode):
     root_index = notes.index(root_note)
     if mode == 'major':
@@ -90,37 +90,37 @@ def test(scales):
 # Showing structured data for debugging
 def show_scales(scales):
     for scale in scales:
-        print('Escala', scale)
-        print('MAYOR:')
-        print('- Notas:',scales[scale]['scale']['major'])
-        print('- Acordes:',scales[scale]['chords']['major'])
-        print('- Relativas:',scales[scale]['relative']['major'])
-        print('MENOR:')
-        print('- Notas:',scales[scale]['scale']['minor'])
-        print('- Acordes:',scales[scale]['chords']['minor'])
-        print('- Relativas:',scales[scale]['relative']['minor'])
+        print('Scale', scale)
+        print('MAJOR:')
+        print('- Notes:',scales[scale]['scale']['major'])
+        print('- Chords:',scales[scale]['chords']['major'])
+        print('- Relatives:',scales[scale]['relative']['major'])
+        print('MINOR:')
+        print('- Notes:',scales[scale]['scale']['minor'])
+        print('- Chords:',scales[scale]['chords']['minor'])
+        print('- Relatives:',scales[scale]['relative']['minor'])
         print('\n')
 
 def run():
-    # Generar el diccionario completo
+    # Generate the complete dictionary
     for note in notes:
-        # Generar escalas
+        # Generate scales
         major_scale = generate_scale(note, intervals_major)
         minor_scale = generate_scale(note, intervals_minor)
 
         # Fix for flat scales
         major_scale, minor_scale = fix_scales(major_scale,minor_scale)
 
-        # Generar acordes
+        # Generate chords
         major_chords = generate_chords(major_scale, chords_major)
         minor_chords = generate_chords(minor_scale, chords_minor)
 
-        # Obtener relativas
+        # Get relatives
         relative_major = get_relative_key(note, 'major')
         relative_minor = get_relative_key(note, 'minor')
 
-        # Añadir a la estructura del diccionario
-        info_musical[note] = {
+        # Add to the dictionary structure
+        musical_info[note] = {
             'scale': {
                 'major': major_scale,
                 'minor': minor_scale
@@ -134,7 +134,7 @@ def run():
                 'minor': relative_minor
             }
         }
-    return info_musical
+    return musical_info
 
 if __name__=='__main__':
     scales = run()
