@@ -27,19 +27,13 @@ def choose_scale():
 @app.route('/scale/<string:key_name>')
 def show_scale(key_name):
     print('User asked for', key_name.upper())
-    # Obtiene el valor de los parámetros de la URL.
-    # # Ej: http://localhost:5000/scale/1?is_flat=True
-    detected = request.args.get('detected') # ?detected='G Minor'
+    # Gets the value of the URL parameters
+    # Ex: http://localhost:5000/scale/c
     mode = request.args.get('mode', 'major').lower() # ?mode=minor
     is_minor = True if mode.lower() == 'minor' else False
-    print(f"URL parameters: '{detected}', '{mode}'") # For debugging
+    print(f"URL parameters: '{mode}'") # For debugging
 
-    if detected is not None:
-        print('Detection parameter received:',detected)
-        scale = ''
-        pass
-    else:
-        scale =  get_scale_data(f'{key_name}', is_minor) # API Call
+    scale =  get_scale_data(f'{key_name}', is_minor) # API Call
     if scale is None:
         print("ALERT: Scale has not been detected!")
         return render_template('404.html'), 404
@@ -62,7 +56,8 @@ def show_scale(key_name):
 def parser(pitch):
     print('Detection parameter received:', pitch)
     # Split the pitch string into the root note and the mode.
-    # Example: 'C_minor' -> ['c', 'minor']
+    # Ex: http://localhost:5000/scale/detected/c_minor
+    # GET 'c_minor' -> ['c', 'minor']
     root, mode = pitch.lower().split('_')
 
     # Default to major if the mode is not recognized.
