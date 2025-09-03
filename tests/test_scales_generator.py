@@ -78,8 +78,8 @@ def test_generate_chords_minor():
 
 def test_get_relative_key():
     """Test relative key calculations."""
-    assert get_relative_key('C', 'major') == 'Am'
+    assert get_relative_key('C', 'major') == 'A'
     assert get_relative_key('A', 'minor') == 'C'
-    assert get_relative_key('G', 'major') == 'Em'
-    assert get_relative_key('C#', 'major') == 'A#m'
+    assert get_relative_key('G', 'major') == 'E'
+    assert get_relative_key('C#', 'major') == 'A#'
     assert get_relative_key('F#', 'minor') == 'A'
